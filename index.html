@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Normalisasi ERD</title>
+</head>
+<body>
+
+<section id="content"></section>
+<footer id="footer"></footer>
+
+<script>
+// Styling dasar
+document.body.style.margin = "0";
+document.body.style.fontFamily = "Arial, sans-serif";
+document.body.style.background = "#f4f4f9";
+
+let content = document.getElementById("content");
+content.style.maxWidth = "900px";
+content.style.margin = "30px auto";
+content.style.background = "white";
+content.style.padding = "20px";
+content.style.borderRadius = "8px";
+content.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+content.style.lineHeight = "1.8";
+
+// Styling tabel otomatis
+function styleTables() {
+    let tables = document.querySelectorAll("table");
+    tables.forEach(table => {
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.style.margin = "15px 0";
+        table.querySelectorAll("th, td").forEach(cell => {
+            cell.style.border = "1px solid #ddd";
+            cell.style.padding = "8px";
+            cell.style.textAlign = "left";
+        });
+        table.querySelectorAll("th").forEach(th => {
+            th.style.background = "#007bff";
+            th.style.color = "white";
+        });
+    });
+}
+
+// Konten Normalisasi ERD
+let materiNormalisasi = `
+    <h2 style="color:#333;">Apa Itu Normalisasi dalam ERD?</h2>
+    <p>
+        Normalisasi adalah proses merapikan struktur tabel dalam database agar tidak terjadi
+        <b>redundansi data (data ganda)</b> dan untuk memastikan bahwa data tersimpan secara efisien.
+    </p>
+
+    <h3 style="color:#007bff;">Tujuan Normalisasi:</h3>
+    <ul>
+        <li>Menghindari duplikasi data</li>
+        <li>Memudahkan pemeliharaan database</li>
+        <li>Meningkatkan konsistensi dan integritas data</li>
+    </ul>
+
+    <h3 style="color:#007bff;">Contoh Kasus Tidak Ternormalisasi</h3>
+    <table>
+        <tr>
+            <th>Mahasiswa</th>
+            <th>Dosen</th>
+        </tr>
+        <tr>
+            <td>Iqbal</td>
+            <td>Pak Patlisan, Pak Jamal</td>
+        </tr>
+        <tr>
+            <td>Dzaky</td>
+            <td>Pak Jamal</td>
+        </tr>
+    </table>
+
+    <p>Masalah: Jika nama dosen berubah, harus edit di banyak baris → <b>Redundansi!</b></p>
+
+    <h3 style="color:#007bff;">Solusi dengan Normalisasi (Many-to-Many)</h3>
+    <p>Relasi Mahasiswa dan Dosen adalah <b>Many-to-Many</b>, maka dibuat tabel penghubung:</p>
+
+    <table>
+        <tr>
+            <th colspan="2">Tabel Mahasiswa</th>
+        </tr>
+        <tr><td>id_mahasiswa</td><td>PK</td></tr>
+        <tr><td>nama_mahasiswa</td><td>Text</td></tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="2">Tabel Dosen</th>
+        </tr>
+        <tr><td>id_dosen</td><td>PK</td></tr>
+        <tr><td>nama_dosen</td><td>Text</td></tr>
+    </table>
+
+    <table>
+        <tr>
+            <th colspan="2">Tabel Relasi Mahasiswa_Dosen</th>
+        </tr>
+        <tr><td>id_mahasiswa</td><td>FK</td></tr>
+        <tr><td>id_dosen</td><td>FK</td></tr>
+    </table>
+`;
+
+function tampilNormalisasi() {
+    content.innerHTML = materiNormalisasi;
+    styleTables();
+}
+
+// === FOOTER ===
+const footer = document.getElementById("footer");
+footer.innerHTML = `
+  <p>Kunjungi Website Resmi Kampus:</p>
+  <a class="btn-logo" href="https://www.ubpkarawang.ac.id" target="_blank">
+    <img src="assets/logo-ubp.png" alt="UBP Karawang">
+  </a>
+  <p>&copy; 2025 Blog Basis Data - UBP Karawang</p>
+`;
+footer.style.backgroundColor = "#007bff";
+footer.style.color = "white";
+footer.style.textAlign = "center";
+footer.style.padding = "25px";
+footer.style.marginTop = "40px";
+footer.style.fontFamily = "Arial, sans-serif";
+
+// === GAYA LOGO BULAT ===
+const logo = footer.querySelector(".btn-logo img");
+logo.style.width = "60px";
+logo.style.height = "60px";
+logo.style.borderRadius = "50%";
+logo.style.border = "2px solid white";
+logo.style.objectFit = "cover";
+logo.style.transition = "transform 0.3s";
+logo.style.cursor = "pointer";
+
+logo.addEventListener("mouseover", () => logo.style.transform = "scale(1.1)");
+logo.addEventListener("mouseout", () => logo.style.transform = "scale(1)");
+
+window.onload = tampilNormalisasi;
+</script>
+
+</body>
+</html>
